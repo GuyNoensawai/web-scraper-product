@@ -16,69 +16,20 @@ let bananaProducts = [];
 let itcityProducts = [];
 
 const adviceUrls = [
-  "https://www.advice.co.th/product/smartphone-tablet",
-  "https://www.advice.co.th/product/apple-product",
+
   "https://www.advice.co.th/product/smart-watch",
   "https://www.advice.co.th/product/smart-life-and-iot",
-  "https://www.advice.co.th/product/smartphone-tablet-accessories",
-  "https://www.advice.co.th/product/notebooks",
-  "https://www.advice.co.th/product/desktop-pc-server",
-  "https://www.advice.co.th/product/notebook-accessorie",
-  "https://www.advice.co.th/product/comset",
-  "https://www.advice.co.th/product/computer-hardware",
-  "https://www.advice.co.th/product/harddisk-storage",
-  "https://www.advice.co.th/product/memory-flashdrive-reader",
-  "https://www.advice.co.th/product/monitor-%E0%B8%88%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%A1",
-  "https://www.advice.co.th/product/mouse-pads",
-  "https://www.advice.co.th/product/keyboard-comboset",
-  "https://www.advice.co.th/product/headset-microphone",
-  "https://www.advice.co.th/product/speaker",
-  "https://www.advice.co.th/product/gaming-chair-desk",
-  "https://www.advice.co.th/product/other-gaming-accessoies",
-  "https://www.advice.co.th/product/streamer",
-  "https://www.advice.co.th/product/camera-capture",
-  "https://www.advice.co.th/product/projector-presentation-tools",
-  "https://www.advice.co.th/product/accessorie",
-  "https://www.advice.co.th/product/ups",
-  "https://www.advice.co.th/product/solar-cell",
-  "https://www.advice.co.th/product/printer-scanner-fax",
-  "https://www.advice.co.th/product/pos-product",
-  "https://www.advice.co.th/product/ink-toner-cartridge",
-  "https://www.advice.co.th/product/paper-sticker",
-  "https://www.advice.co.th/product/software",
-  "https://www.advice.co.th/product/cctv-and-security",
-  "https://www.advice.co.th/product/network-wireless",
-  "https://www.advice.co.th/product/network-wire",
-  "https://www.advice.co.th/product/network-accessories",
-  "https://www.advice.co.th/product/network-fiberoptic",
-  "https://www.advice.co.th/product/consumer-electronics",
-  "https://www.advice.co.th/productcorporate"
+  
 ];
 
 const itcityUrls = [
   "https://www.itcity.in.th/product-category/Gadget",
   "https://www.itcity.in.th/product-category/%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B8%9E%E0%B8%B4%E0%B8%A7%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B9%82%E0%B8%95%E0%B9%8A%E0%B8%B0%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AD%E0%B8%AD%E0%B8%A5%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%99",
-  "https://www.itcity.in.th/product-category/%E0%B8%88%E0%B8%AD%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B8%9E%E0%B8%B4%E0%B8%A7%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C",
-  "https://www.itcity.in.th/product-category/%E0%B8%8B%E0%B8%AD%E0%B8%9F%E0%B8%95%E0%B9%8C%E0%B9%81%E0%B8%A7%E0%B8%A3%E0%B9%8C%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%81%E0%B8%A1%E0%B8%AA%E0%B9%8C",
-  "https://www.itcity.in.th/product-category/%E0%B8%9B%E0%B8%A3%E0%B8%B4%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C-&-%E0%B8%AA%E0%B9%81%E0%B8%81%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%AD%E0%B8%A3%E0%B9%8C",
-  "https://www.itcity.in.th/product-category/%E0%B8%9F%E0%B8%B4%E0%B8%A5%E0%B9%8C%E0%B8%A1",
-  "https://www.itcity.in.th/product-category/%E0%B8%A5%E0%B8%B3%E0%B9%82%E0%B8%9E%E0%B8%87-&-%E0%B8%AB%E0%B8%B9%E0%B8%9F%E0%B8%B1%E0%B8%87",
-  "https://www.itcity.in.th/product-category/%E0%B8%AA%E0%B8%A1%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%97%E0%B9%82%E0%B8%9F%E0%B8%99%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1",
-  "https://www.itcity.in.th/product-category/%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%97%E0%B8%84%E0%B9%82%E0%B8%99%E0%B9%82%E0%B8%A5%E0%B8%A2%E0%B8%B5-Ai",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B8%9E%E0%B8%B4%E0%B8%A7%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A-(DIY)",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%9A%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%81%E0%B8%A1%E0%B8%A1%E0%B8%B4%E0%B9%88%E0%B8%87",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%99%E0%B9%87%E0%B8%95%E0%B9%80%E0%B8%A7%E0%B8%B4%E0%B8%A3%E0%B9%8C%E0%B8%81-&-%E0%B9%80%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%84%E0%B8%AD%E0%B8%97%E0%B8%B5%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E",
-  "https://www.itcity.in.th/product-category/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%84%E0%B8%AD%E0%B9%82%E0%B8%AD%E0%B8%97%E0%B8%B5",
-  "https://www.itcity.in.th/product-category/%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B9%80%E0%B8%81%E0%B8%A1%E0%B8%9E%E0%B8%81%E0%B8%9E%E0%B8%B2",
-  "https://www.itcity.in.th/product-category/%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A0%E0%B8%B2%E0%B8%A2%E0%B9%83%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99",
-  "https://www.itcity.in.th/product-category/%E0%B9%80%E0%B8%8B%E0%B8%97%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%AD%E0%B8%9A",
-  "https://www.itcity.in.th/product-category/%E0%B9%81%E0%B8%97%E0%B9%87%E0%B8%9A%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%95%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1",
-  "https://www.itcity.in.th/product-category/%E0%B9%82%E0%B8%99%E0%B9%89%E0%B8%95%E0%B8%9A%E0%B8%B8%E0%B9%8A%E0%B8%84%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B9%80%E0%B8%AA%E0%B8%A3%E0%B8%B4%E0%B8%A1",
 ];
-const bananaUrl = "https://www.bnn.in.th/th/p?ref=search-result";
+const bananaUrl = [
+  "https://www.bnn.in.th/en/p/notebook/2-in-1-notebook?category_path=Notebook%3E2-in-1%20Notebook&in_stock=false&sort_by=relevance&page=1",
+  "https://www.bnn.in.th/en/p/desktop-and-all-in-one/all-in-one?category_path=Desktop%20%26%20All%20in%20one%3EAll-In-One%20%28AIO%29&in_stock=false&sort_by=relevance&page=1"
+];
 
 // ✅ ฟังก์ชันรวม
 async function scrapeAll() {
@@ -97,7 +48,18 @@ async function scrapeAll() {
   try {
     [adviceProducts, bananaProducts, itcityProducts] = await Promise.all([
       scrapeAdvice(browser, adviceUrls),
-      scrapeBanana(browser, await browser.newPage(), bananaUrl),
+      
+      (async () => {
+        const bananaResults = [];
+        for (const url of bananaUrl) {
+          const page = await browser.newPage();
+          const result = await scrapeBanana(browser, page, url);
+          bananaResults.push(...result);
+          await page.close();
+        }
+        return bananaResults;
+      })(),
+
       scrapeITCity(browser, itcityUrls),
     ]);
 
@@ -376,7 +338,7 @@ async function scrapeBanana(browser, page, categoryUrl) {
           for (let tryCount = 0; tryCount < 3; tryCount++) {
             try {
               await detailPage.waitForSelector('div.sku-number span.sku-number-value[data-v-36917099]', { timeout: 0 }).catch(() => {});
-              await new Promise((r) => setTimeout(r, 1500));
+              await new Promise((r) => setTimeout(r, 6000));
               productCodeRaw = await detailPage.evaluate(() => {
                 const el1 = document.querySelector('span.sku-number-value[data-v-36917099]');
                 if (el1 && el1.innerText) return el1.innerText.trim();

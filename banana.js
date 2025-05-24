@@ -13,7 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 
 let bananaProducts = [];
 
-const bananaUrl = "https://www.bnn.in.th/en/p/notebook/2-in-1-notebook?category_path=Notebook%3E2-in-1%20Notebook&in_stock=false&sort_by=relevance&page=1";
+const bananaUrl = [
+  "https://www.bnn.in.th/en/p/notebook/2-in-1-notebook?category_path=Notebook%3E2-in-1%20Notebook&in_stock=false&sort_by=relevance&page=1",
+  "https://www.bnn.in.th/en/p/desktop-and-all-in-one/all-in-one?category_path=Desktop%20%26%20All%20in%20one%3EAll-In-One%20%28AIO%29&in_stock=false&sort_by=relevance&page=1"
+];
 
 async function scrapeAll() {
   console.log("🔄 เริ่ม scrape ข้อมูลใหม่");
