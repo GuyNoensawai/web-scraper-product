@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>รายการสินค้า</title>
+  <style>
+    * {
+            font-family: sans-serif;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 70px;
+            height: auto;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .table {
+            width: 90%;
+            margin: 0 auto; /* ตรงนี้ช่วยจัดให้อยู่ตรงกลาง */
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        table {
+            border-collapse: collapse;     
+            text-align: center;
+            vertical-align: middle;
+        }
+        table .head {
+            border-bottom: solid 1px #EAEDED;
+            color: #ffffff;
+        }
+        table .head th {
+            padding: 12px 24px;
+            font-weight: 600;
+            background-color: #0000ae;
+            border: 1px solid #0000ae;
+        }
+        table .row {
+            border-bottom: solid 1px #c2c2c2;
+            background-color: #e9e9e9;
+            border: 1px solid #c2c2c2;
+        }
+        table .row:hover {
+            background-color: #EAEDED;
+        }
+        table .row td {
+            padding: 16px 24px;
+        }
+        table .row:nth-child(odd) {
+            background-color: #f3f3f3;
+        }
+        table .row:last-child {
+            border: none;
+        }
+  </style>
+</head>
+<body class="p-4">
+  <h1>
+    <center>ผลลัพธ์สินค้า</center>
+  </h1>
+
+  <center>
+    <h3>
+      <input type="text" id="searchInput" style="margin-bottom: 5px; padding: 15px; width: 800px; border-radius: 20px; border: 1px solid #c2c2c2;" placeholder="พิมพ์ชื่อสินค้าเพื่อค้นหา">
+    </h3>
+  </center>
+  <div style="width: 90%; margin: 0 auto; text-align: right; margin-bottom: 5px;">
+    <button onclick="exportDataToExcel()" style="padding: 10px 20px; border-radius: 10px; background-color: green; color: white; border: none;">
+      Export Excel
+    </button>
+  </div>
+
+
+    <table class="table table-bordered table-striped" style="margin-top: 0;">
+      <thead>
+        <tr class="head">
+          <th>ลำดับ</th>
+          <th>รหัสสินค้า</th>
+          <th>รูปภาพ</th>
+          <th>ชื่อ</th>
+          <th>ยี่ห้อ</th>
+          <th>หมวดหมู่</th>
+          <th>ราคา</th>
+          <th>ส่วนลด</th>
+          <th>ราคาขาย</th>
+          <th>ลิงก์</th>
+          <th>จากเว็บ</th>
+        </tr>
+      </thead>
+      <tbody id="product-body">
+        <tr><td colspan="11">Loading data...</td></tr>
+      </tbody>
+    </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    const searchInput = document.getElementById('searchInput');
+
+    function renderTable(data) {
+      const tbody = document.getElementById('product-body');
+      const filter = searchInput.value.toLowerCase();
+      tbody.innerHTML = '';
+    
+      const filtered = data
+      .filter(p => (p.name || '').toLowerCase().includes(filter))
+      .slice().reverse();
+
+    
+      let counter = 1;
+      filtered.forEach(p => {
+        const brandDisplay = p.brand
+          ? (/\.(jpeg|jpg|gif|png|webp|svg)$/i.test(p.brand)
+            ? `<img src="${p.brand}" style="max-height: 40px;">`
+            : p.brand)
+          : 'ไม่มีข้อมูล';
+      
+        const row = `
+          <tr class="row">
+            <td>${counter++}</td>
+            <td>${p.product_code || 'ไม่มีข้อมูล'}</td>
+            <td><img src="${p.image}" alt="img" width="80"></td>
+            <td>${p.name}</td>
+            <td>${brandDisplay}</td>
+            <td>${p.category || 'ไม่มีข้อมูล'}</td>
+            <td>${p.price}</td>
+            <td>${p.discount}</td>
+            <td>${p.sellprice}</td>
+            <td><a href="${p.link}" target="_blank">เปิด</a></td>
+            <td><img src="${p.logo}" style="max-height: 40px;"></td>
+          </tr>`;
+        tbody.insertAdjacentHTML('beforeend', row);
+      });
+    
+      if(filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="11">ไม่พบสินค้า</td></tr>`;
+      }
+    }
+    
+    let dataCache = [];
+
+    async function fetchDataAndUpdate() {
+      try {
+        const res = await fetch('/data');
+        const raw = await res.json();
+        console.log('📦 ได้ข้อมูล:', raw);
+        const data = Object.values(raw)
+          .filter(Array.isArray)
+          .flat();
+          if (!Array.isArray(data)) {
+            console.error("⚠️ ข้อมูลที่ได้ไม่ใช่ array:", data);
+            return;
+          }
+        dataCache = data;
+        renderTable(data);
+      } catch (err) {
+        console.error('โหลดข้อมูลไม่สำเร็จ:', err);
+      }
+    }
+
+
+    
+    fetchDataAndUpdate();
+    setInterval(fetchDataAndUpdate, 10000);
+    
+    searchInput.addEventListener('input', () => renderTable(dataCache));
+    
+    function exportDataToExcel() {
+      if (!dataCache || dataCache.length === 0) {
+        alert("ไม่มีข้อมูลให้ export");
+        return;
+      }
+    
+      const exportData = dataCache.map((p, index) => ({
+        ลำดับ: index + 1,
+        รหัสสินค้า: p.product_code || 'ไม่มีข้อมูล',
+        ชื่อสินค้า: p.name,
+        ยี่ห้อ: typeof p.brand === 'string' ? p.brand : 'ไม่มีข้อมูล',
+        หมวดหมู่: p.category || 'ไม่มีข้อมูล',
+        ราคาเต็ม: p.price,
+        ส่วนลด: p.discount,
+        ราคาขาย: p.sellprice,
+        ลิงก์: p.link,
+        จากเว็บ: p.source
+      }));
+    
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "รวมสินค้า");
+    
+      XLSX.writeFile(wb, "รวมสินค้าทั้งหมด.xlsx");
+    }
+  </script>
+</body>
+</html>

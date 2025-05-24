@@ -1,0 +1,25 @@
+node_modules/
+
+# log files
+*.log
+npm-debug.log*
+
+# environment
+.env
+.env.*
+
+# compiled output
+dist/
+build/
+
+# system files
+.DS_Store
+Thumbs.db
+
+# OS-specific
+.vscode/
+.idea/
+
+# temporary data
+*.swp
+*.tmp
