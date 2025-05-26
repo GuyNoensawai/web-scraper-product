@@ -36,14 +36,9 @@ async function scrapeAll() {
   console.log("🔄 เริ่ม scrape ข้อมูลใหม่");
 
   const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-blink-features=AutomationControlled",
-      "--lang=th-TH"
-    ]
-  });
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox'], // สำคัญมากสำหรับ Render
+});
 
   try {
     [adviceProducts, bananaProducts, itcityProducts] = await Promise.all([
