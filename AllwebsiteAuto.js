@@ -11,10 +11,10 @@ app.set("views", path.join(__dirname, "views"));
 
 // URL ต่างๆ
 const adviceUrls = [
-
   "https://www.advice.co.th/product/smart-watch",
-  
   "https://www.advice.co.th/product/smart-life-and-iot",
+  "https://www.advice.co.th/product/apple-product",
+  "https://www.advice.co.th/product/smartphone-tablet",
   "https://www.advice.co.th/product/smartphone-tablet-accessories",
   "https://www.advice.co.th/product/notebooks",
   "https://www.advice.co.th/product/desktop-pc-server",
